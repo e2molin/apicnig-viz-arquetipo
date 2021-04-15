@@ -1,7 +1,5 @@
 # Capas raster WMS y WMTS
 
-[🔙 Volver al inicio](readme.md)
-
 ## Consulta de las capas de un mapa
 
 Existen varios métodos que permiten gestionar las capas de un mapa.
