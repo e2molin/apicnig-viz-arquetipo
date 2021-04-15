@@ -1,6 +1,6 @@
 # Capas raster WMS y WMTS
 
-[🔙 Volver al inicio](./readme.md)
+[🔙 Volver al inicio](readme.md)
 
 ## Consulta de las capas de un mapa
 
