@@ -1,5 +1,6 @@
 # Capas raster WMS y WMTS
 
+[🔙 Volver](https://github.com/e2molin/viz-arquetipo#readme)
 ## Consulta de las capas de un mapa
 
 Existen varios métodos que permiten gestionar las capas de un mapa.
@@ -120,3 +121,8 @@ en donde:
 * false 👉 *queryable*, controla que la capa pueda ser consultable mediante peticiones **GetFeatureInfo**.
 * true 👉 *visible*, controla que la capa se carge visible u oculta
 
+
+
+---
+
+[🔙 Volver](https://github.com/e2molin/viz-arquetipo#readme)
