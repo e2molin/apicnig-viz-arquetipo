@@ -1,5 +1,6 @@
 # 🔌 [BackImgLayer]
 
+[🔙 Volver](https://github.com/e2molin/viz-arquetipo#readme)
 ## Definición de un control **BackImgLayer**
 
 ```javascript
@@ -114,3 +115,7 @@ const mp9 = new M.plugin.BackImgLayer({
 }
 );
 ```
+
+
+---
+[🔙 Volver](https://github.com/e2molin/viz-arquetipo#readme)

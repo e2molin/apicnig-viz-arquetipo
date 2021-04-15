@@ -1,5 +1,6 @@
 # Code snippets
 
+[🔙 Volver](https://github.com/e2molin/viz-arquetipo#readme)
 ##  ⚙ Creación del mapa
 
 El Objeto mapa es de la clase M.map y nos permite configurar los controles que figuran de inicio en el mapa, niveles de zoom y posición y centrado del mapa en el arranque.
@@ -156,4 +157,5 @@ const mp12 = new M.plugin.SelectionZoom({
 });
 ```
 
-
+---
+[🔙 Volver](https://github.com/e2molin/viz-arquetipo#readme)
