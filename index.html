@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="mapea" content="yes">
+    <title>Arquetipo Visualizador</title>
+    <link type="text/css" rel="stylesheet" href="http://componentes.ign.es/api-core/assets/css/apiign.ol.min.css">
+    <link href="http://componentes.ign.es/api-core/plugins/ignsearch/ignsearch.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/attributions/attributions.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/xylocator/xylocator.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/sharemap/sharemap.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/mousesrs/mousesrs.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/zoomextent/zoomextent.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/toc/toc.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/backimglayer/backimglayer.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/overviewmap/overviewmap.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/measurebar/measurebar.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/selectionzoom/selectionzoom.ol.min.css" rel="stylesheet" />
+    <link href="http://componentes.ign.es/api-core/plugins/selectiondraw/selectiondraw.ol.min.css" rel="stylesheet" />
+    </link>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="mapjs" class="m-container"></div>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/vendor/browser-polyfill.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/js/apiign.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/js/configuration.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/ignsearch/ignsearch.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/attributions/attributions.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/xylocator/xylocator.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/sharemap/sharemap.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/zoomextent/zoomextent.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/mousesrs/mousesrs.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/toc/toc.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/backimglayer/backimglayer.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/overviewmap/overviewmap.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/measurebar/measurebar.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/selectionzoom/selectionzoom.ol.min.js"></script>
+    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/selectiondraw/selectiondraw.ol.min.js"></script>
+    
+
+    <script type="text/javascript">
+        // Configuración de backgroundlayers para EPSG:4326
+        //http://mapea-lite.desarrollo.guadaltel.es/api-core/
+        // M.config.backgroundlayers[0].layers = ['WMTS*https://www.ign.es/wmts/ign-base?*IGNBaseTodo*EPSG:4326*base*false*image/jpeg*false*false*true'];
+        // M.config.backgroundlayers[1].layers = ['WMTS*https://www.ign.es/wmts/pnoa-ma?*OI.OrthoimageCoverage*EPSG:4326*imagen*false*image/jpeg*false*false*true'];
+        // M.config.backgroundlayers[2].layers = [
+        //     'WMTS*https://www.ign.es/wmts/pnoa-ma?*OI.OrthoimageCoverage*EPSG:4326*imagen*true*image/jpeg*false*false*true',
+        //     'WMTS*https://www.ign.es/wmts/ign-base?*IGNBaseOrto*EPSG:4326*Callejero*true*image/png*false*false*true'
+        // ];
+
+
+
+
+
+
+
+        
+        M.config.attributions.defaultAttribution = 'Instituto Geográfico Nacional';
+        M.config.attributions.defaultURL = 'https://www.ign.es';
+
+
+        const map = M.map({
+            container: 'mapjs',
+            controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location',  'getfeatureinfo'],
+            // controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location', 'backgroundlayers', 'getfeatureinfo'],
+            zoom: 6,
+            maxZoom: 20,
+            minZoom: 4,
+            projection: "EPSG:3857*m",
+            center: {
+                x: -712300,
+                y: 4310700,
+                draw: false  //Dibuja un punto en el lugar de la coordenada
+            },
+        });
+
+        const REDNAP = new M.layer.WMS({
+            url: 'https://www.ign.es/wms-inspire/redes-geodesicas?',
+            name: 'RED_NAP',
+            legend: 'Red de Nivelación de Alta Precisión',
+            tiled: false,
+            visibility: false,
+        }, {});
+
+        const REGENTE = new M.layer.WMS({
+            url: 'https://www.ign.es/wms-inspire/redes-geodesicas?',
+            name: 'RED_REGENTE',
+            legend: 'Red REGENTE',
+            tiled: false,
+            visibility: false,
+        }, {});
+
+        const REDROI = new M.layer.WMS({
+            url: 'https://www.ign.es/wms-inspire/redes-geodesicas?',
+            name: 'RED_ROI',
+            legend: 'Red de Orden Inferior (ROI)',
+            tiled: false,
+            visibility: false,
+        }, {});
+
+        const REDGNSS = new M.layer.WMS({
+            url: 'https://www.ign.es/wms-inspire/redes-geodesicas?',
+            name: 'RED_ERGNSS',
+            legend: 'Red de Estaciones Permanentes ERGNSS)',
+            tiled: false,
+            visibility: true,
+        }, {});        
+
+
+
+        const REDGNSSCCAA = new M.layer.GeoJSON({
+            name: "capaJson",
+            url: "http://rep-gnss.es/visorgnss2/api/mapa/",
+            extract: false,
+            /*source: {
+                "type": "FeatureCollection",
+                "features": [{
+                    "properties": {
+                        "estado": 1,
+                        "vendor": {
+                            "mapea": {}
+                        },
+                        "sede": "/Sevilla/CHGCOR003-Oficina de la zona regable del Genil",
+                        "tipo": "ADSL",
+                        "name": "/Sevilla/CHGCOR003-Oficina de la zona regable del Genil"
+                    },
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [-5.278075, 37.69374444444444]
+                    }
+                }],
+                "crs": {
+                    "properties": {
+                        "name": "EPSG:4326"
+                    },
+                    "type": "name"
+                }
+            }*/
+        
+        });
+
+        // Punto de tamaño 5 con relleno verde semitransparente y borde rojo
+        let estiloVerde = new M.style.Point({
+        radius: 5, 
+        fill: {  
+            color: 'green',
+            opacity: 0.5
+        },
+        stroke: {
+            color: '#FF0000'
+        }
+        });
+
+        let estiloRojo = new M.style.Point({
+        radius: 5, 
+        fill: {  
+            color: 'green',
+            opacity: 0.5
+        },
+        stroke: {
+            color: '#FF0000'
+        }
+        });
+        
+        let estiloPoint = new M.style.Point({
+            
+                                    /*fill: {
+                                        color: function(feature,map) {
+                                            var colorPunto;
+                                            if (feature.getAttribute('propietario').trim()==='IGNE, Servicio de Programas Geodésicos'){
+                                                colorPunto = 'green';
+                                            }else{
+                                                colorPunto = 'red';
+                                            }
+                                            return colorPunto;
+                                        },
+                                        opacity: 0.7
+                                    },
+                                    stroke: {
+                                        color: 'yellow',
+                                        width: 2
+                                    },
+                                    radius: 8,*/
+                                    icon: {
+                                            // Forma del fontsymbol.
+                                            // BAN|BLAZON|BUBBLE|CIRCLE|LOZENGE|MARKER
+                                            // NONE|SHIELD|SIGN|SQUARE|TRIANGLE
+                                            form: function(feature,map) {
+                                                if (feature.getAttribute('propietario').trim()==='IGNE, Servicio de Programas Geodésicos'){
+                                                    return M.style.form.TRIANGLE;
+                                                }else{
+                                                    return M.style.form.CIRCLE;
+                                                }
+                                                
+                                            },
+                                            fontsize: 0.5,
+                                            radius: 8,                    // Tamaño
+                                            rotation: 0,                  // Giro del icono en radianes
+                                            rotate: false,                // Activar rotacion con dispositivo
+                                            offset: [0, 0],               // Desplazamiento en pixeles en los ejes x,y
+                                            color: 'black',
+                                            fill: function(feature,map) {
+                                                                var colorPunto;
+                                                                if ((feature.getAttribute('estado')==='Emitiendo')){
+                                                                    colorPunto = 'green';
+                                                                /*}else if ((feature.getAttribute('Bocata_Beb')==='No') && (feature.getAttribute('Comida_Pre')==='No') && (feature.getAttribute('Ducha')==='Sí')){
+                                                                    colorPunto = 'blue';
+                                                                }else if ((feature.getAttribute('Bocata_Beb')==='Sí' || feature.getAttribute('Comida_Pre')==='Sí') && (feature.getAttribute('Ducha')==='No')){
+                                                                    colorPunto = 'yellow';*/
+                                                                }else{
+                                                                    colorPunto = 'red';
+                                                                }
+                                                                return colorPunto;
+                                            },//'#8A0829',              // Color de relleno
+                                            gradientcolor: '#088A85',     // Color del borde
+                                            //gradient: true,               // Degradado entre color de borde e interior
+                                            opacity: 0.5                  // Transparencia. 0(transparente)|1(opaco)
+                                        }
+        });
+
+
+
+        REDGNSSCCAA.setStyle(estiloPoint);
+
+
+    /**
+     * Definimos capas notación standard
+     * 
+     */
+    let wmtsMTN251edi = new M.layer.WMTS({
+    url: "http://www.ign.es/wmts/primera-edicion-mtn",
+    name: "mtn25-edicion1",
+    matrixSet: "GoogleMapsCompatible",
+    legend: "Primera edición MTN25"
+    }, {
+    format: 'image/jpeg'
+    });
+
+    let wmtsMTN501edi = new M.layer.WMTS({
+    url: "http://www.ign.es/wmts/primera-edicion-mtn",
+    name: "mtn50-edicion1",
+    matrixSet: "GoogleMapsCompatible",
+    legend: "Primera edición MTN50"
+    }, {
+    format: 'image/jpeg'
+    });
+    
+    let wmtsMTNActual = new M.layer.WMTS({
+    url: "https://www.ign.es/wmts/mapa-raster",
+    name: "MTN",
+    matrixSet: "GoogleMapsCompatible",
+    legend: "Cartografía Ráster Actual"
+    }, {
+    format: 'image/jpeg'
+    });
+
+    let wmtssiose = new M.layer.WMTS({
+    url: "https://servicios.idee.es/wmts/ocupacion-suelo",
+    name: "LC.LandCoverSurfaces",
+    matrixSet: "GoogleMapsCompatible",
+    legend: "CORINE / SIOSE"
+    }, {
+    format: 'image/jpeg'
+    });
+
+    let wmtsmdt = new M.layer.WMTS({
+    url: "https://servicios.idee.es/wmts/mdt",
+    name: "Relieve",
+    matrixSet: "GoogleMapsCompatible",
+    legend: "MDT"
+    }, {
+    format: 'image/jpeg'
+    });
+
+
+
+
+        map.addLayers([REDNAP, REGENTE, REDROI,REDGNSS,REDGNSSCCAA]);
+
+        const mp = new M.plugin.IGNSearch({
+            servicesToSearch: 'gn',
+            maxResults: 10,
+            isCollapsed: false,
+            noProcess: 'municipio,poblacion',
+            countryCode: 'es',
+            reverse: true,
+        });
+
+        const mp2 = new M.plugin.Attributions({
+            mode: 1,
+            scale: 25000,
+            url: 'https://componentes.ign.es/NucleoVisualizador/vectorial_examples/atribucion.kml',
+            type: 'kml',
+
+        });
+
+        const mp3 = new M.plugin.ShareMap({
+            baseUrl: 'http://componentes.ign.es/api-core/',
+            position: 'BR',
+        });
+        const mp4 = new M.plugin.XYLocator({
+            position: 'TL',
+        });
+        const mp6 = new M.plugin.ZoomExtent();
+        const mp7 = new M.plugin.MouseSRS({
+            srs: 'EPSG:4326',
+            label: 'WGS84',
+            precision: 6,
+            geoDecimalDigits: 4,
+            utmDecimalDigits: 2,
+        });
+
+        const mp8 = new M.plugin.TOC({
+            position: 'TR',
+            collapsible: true,
+            collapsed: true,
+        });
+
+        const mp9 = new M.plugin.BackImgLayer({
+            position: 'TR',
+            collapsible: true,
+            collapsed: true,
+            layerId: 0,
+            layerVisibility: true,
+            columnsNumber: 4,
+            layerOpts: [{
+                    id: 'mapa',
+                    preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqmapa.png',
+                    title: 'Mapa',
+                    layers: [new M.layer.WMTS({
+                        url: 'http://www.ign.es/wmts/ign-base?',
+                        name: 'IGNBaseTodo',
+                        legend: 'Mapa IGN',
+                        matrixSet: 'EPSG:4326',
+                        transparent: false,
+                        displayInLayerSwitcher: false,
+                        queryable: false,
+                        visible: true,
+                        format: 'image/jpeg',
+                    })],
+                },
+                {
+                    id: 'imagen',
+                    title: 'Imagen',
+                    preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqimagen.png',
+                    layers: [new M.layer.WMTS({
+                        url: 'http://www.ign.es/wmts/pnoa-ma?',
+                        name: 'OI.OrthoimageCoverage',
+                        legend: 'Imagen (PNOA)',
+                        matrixSet: 'EPSG:4326',
+                        transparent: false,
+                        displayInLayerSwitcher: false,
+                        queryable: false,
+                        visible: true,
+                        format: 'image/jpeg',
+                    })],
+                },
+                {
+                    id: 'hibrido',
+                    title: 'Híbrido',
+                    preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqhibrid.png',
+                    layers: [new M.layer.WMTS({
+                            url: 'http://www.ign.es/wmts/pnoa-ma?',
+                            name: 'OI.OrthoimageCoverage',
+                            legend: 'Imagen (PNOA)',
+                            matrixSet: 'EPSG:4326',
+                            transparent: true,
+                            displayInLayerSwitcher: false,
+                            queryable: false,
+                            visible: true,
+                            format: 'image/jpeg',
+                        }),
+                        new M.layer.WMTS({
+                            url: 'http://www.ign.es/wmts/ign-base?',
+                            name: 'IGNBaseOrto',
+                            matrixSet: 'EPSG:4326',
+                            legend: 'Mapa IGN',
+                            transparent: false,
+                            displayInLayerSwitcher: false,
+                            queryable: false,
+                            visible: true,
+                            format: 'image/png',
+                        })
+                    ],
+                },
+                {
+                    id: 'lidar',
+                    preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqlidar.png',
+                    title: 'LIDAR',
+                    layers: [new M.layer.WMTS({
+                        url: 'https://wmts-mapa-lidar.idee.es/lidar?',
+                        name: 'EL.GridCoverageDSM',
+                        legend: 'Modelo Digital de Superficies LiDAR',
+                        matrixSet: 'EPSG:4326',
+                        transparent: false,
+                        displayInLayerSwitcher: false,
+                        queryable: false,
+                        visible: true,
+                        format: 'image/png',
+                    })],
+                },
+                {
+                    id: 'mtnActual',
+                    preview: 'img/mtnactual.jpg',
+                    title: 'MTN Actual',
+                    layers: [wmtsMTNActual],
+                },
+                {
+                    id: 'mtn25',
+                    preview: 'img/mtn251Edi.jpg',
+                    title: 'MTN25 1Edi',
+                    layers: [wmtsMTN251edi],
+                },
+                {
+                    id: 'mtn50',
+                    preview: 'img/mtn501Edi.jpg',
+                    title: 'MTN50 1Edi',
+                    layers: [wmtsMTN501edi],
+                },
+                {
+                    id: 'SIOSE',
+                    preview: 'img/siose.jpg',
+                    title: 'CORINE / SIOSE',
+                    layers: [wmtssiose],
+                },                
+            ],
+        }
+        );
+
+        const mp10 = new M.plugin.OverviewMap({
+                position: 'BL',
+                collapsible: true,
+                collapsed: true,            
+                fixed: true,
+        });
+
+        const mp11 = new M.plugin.MeasureBar({
+                position: 'BL',
+        });
+
+
+        const mp12 = new M.plugin.SelectionZoom({
+                position: 'TL',
+                collapsible:  true,
+                collapsed:  true,
+                ids: 'peninsula,canarias,baleares,ceuta,melilla',
+                titles: 'Peninsula,Islas Canarias,Illes Balears,Ceuta,Melilla',
+                previews: 'img/espana.png,img/canarias.png,img/baleares.png,img/ceuta.png,img/melilla.png',
+                bboxs: '-1200091.444315327, 365338.89496508264, 4348955.797933925, 5441088.058207252, -2170190.6639824593, -1387475.4943422542, 3091778.038884449, 3637844.1689537475 , 115720.89020469127, 507078.4750247937, 4658411.436032817, 4931444.501067467,-599755.2558583047, -587525.3313326766, 4281734.817081453, 4290267.100363785, -334717.4178261766, -322487.4933005484, 4199504.016876071, 4208036.300158403',
+                zooms: '7,8,9,14,14',
+            });
+
+        const mp13 = new M.plugin.SelectionDraw({
+                projection: 'EPSG:4326',
+                position: 'TL',
+                collapsible:  true,
+                collapsed:  true,
+        });
+
+        mp13.on('finished:draw', (feature) => {
+                M.dialog.info(JSON.stringify(feature), 'Buscar vértices dentro de la selección');
+        });
+        
+
+
+        map.addPlugin(mp);
+        map.addPlugin(mp2);
+        map.addPlugin(mp3);
+        map.addPlugin(mp4);
+        map.addPlugin(mp6);
+        map.addPlugin(mp7);
+        map.addPlugin(mp8);
+        map.addPlugin(mp9);
+        map.addPlugin(mp10);
+        map.addPlugin(mp11);
+        map.addPlugin(mp12);
+        map.addPlugin(mp13);
+
+    </script>
+</body>
+
+</html>
