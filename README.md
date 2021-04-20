@@ -3,6 +3,7 @@
 ![](documents/img/screenmap.jpg)
 ## 📚 Documentación
 
+* 📰 Versiones de APIcore y Plugins [👉 Versiones](documents/apicore-releases.md).
 * ⚙ Snippets de código [👉 Snippets](documents/snippets.md).
 * 🎓 Conceptos
   * Capas raster [👉 Definición de capas raster](documents/concept-rasterLayers.md).
