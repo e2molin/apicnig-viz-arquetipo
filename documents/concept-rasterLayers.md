@@ -123,6 +123,13 @@ en donde:
 
 
 
+
+
+
+
+
+
+
 ---
 
 [🔙 Volver](https://github.com/e2molin/viz-arquetipo#readme)

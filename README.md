@@ -6,7 +6,8 @@
 * 📰 Versiones de APIcore y Plugins [👉 Versiones](documents/apicore-releases.md).
 * ⚙ Snippets de código [👉 Snippets](documents/snippets.md).
 * 🎓 Conceptos
-  * Capas raster [👉 Definición de capas raster](documents/concept-rasterLayers.md).
+  * Capas raster WMS y WMTS [👉 Definición de capas raster](documents/concept-rasterLayers.md).
+  * Capas raster XYZ [👉 Definición de capas raster](documents/concept-rasterXYZ.md).
 * 🔌 Plugins
   *  [BackImageLayer] [👉 Configurando el BackImageLayer](documents/plugin-BackImgLayer.md).
 
