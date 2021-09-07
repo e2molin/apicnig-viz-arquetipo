@@ -10,9 +10,9 @@
     <link type="text/css" rel="stylesheet" href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/assets/css/apiign.ol.min.css">
     <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/ignsearch/ignsearch.ol.min.css" rel="stylesheet" />
     <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/toc/toc.ol.min.css" rel="stylesheet" />
-    <link href="http://componentes.ign.es/api-core/plugins/backimglayer/backimglayer.ol.min.css" rel="stylesheet" />
-    <link href="http://componentes.ign.es/api-core/plugins/mousesrs/mousesrs.ol.min.css" rel="stylesheet" />
-    <link href="http://componentes.ign.es/api-core/plugins/xylocator/xylocator.ol.min.css" rel="stylesheet" />
+    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/backimglayer/backimglayer.ol.min.css" rel="stylesheet" />
+    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/mousesrs/mousesrs.ol.min.css" rel="stylesheet" />
+    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/xylocator/xylocator.ol.min.css" rel="stylesheet" />
 
     <style type="text/css">
         html,
@@ -32,9 +32,9 @@
     <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/js/configuration.js"></script>
     <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/ignsearch/ignsearch.ol.min.js"></script>
     <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/toc/toc.ol.min.js"></script>
-    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/backimglayer/backimglayer.ol.min.js"></script>
-    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/mousesrs/mousesrs.ol.min.js"></script>
-    <script type="text/javascript" src="http://componentes.ign.es/api-core/plugins/xylocator/xylocator.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/backimglayer/backimglayer.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/mousesrs/mousesrs.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/xylocator/xylocator.ol.min.js"></script>
 
     <script type="text/javascript">
         // Configuración de backgroundlayers para EPSG:4326
@@ -45,7 +45,6 @@
         //     'WMTS*https://www.ign.es/wmts/pnoa-ma?*OI.OrthoimageCoverage*EPSG:4326*imagen*true*image/jpeg*false*false*true',
         //     'WMTS*https://www.ign.es/wmts/ign-base?*IGNBaseOrto*EPSG:4326*Callejero*true*image/png*false*false*true'
         // ];
-
 
 /*
 IGNBase:
@@ -304,6 +303,24 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
     });
     map.addTMS(tmsBaseIGN);
 
+    const tmsMapaIGN = new M.layer.TMS({
+        url: 'https://tms-mapa-raster.ign.es/1.0.0/mapa-raster/{z}/{x}/{-y}.jpeg',
+        name: 'TMS MAPA IGN',
+        projection: 'EPSG:3857',
+        visibility: false,
+    });
+    map.addTMS(tmsMapaIGN);
+
+    const tmsPNOAIGN = new M.layer.TMS({
+        url: 'https://tms-pnoa-ma.ign.es/1.0.0/pnoa-ma/{z}/{x}/{-y}.jpeg',
+        name: 'TMS PNOA IGN',
+        projection: 'EPSG:3857',
+        visibility: false,
+    });
+    map.addTMS(tmsPNOAIGN);
+
+
+
     /**
      * Algunos plugins para ayudar en la configuración del mapa
      */
@@ -344,10 +361,10 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         columnsNumber: 4,
         layerOpts: [{
             id: 'mapa',
-            preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqmapa.png',
+            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqmapa.png',
             title: 'Mapa',
             layers: [new M.layer.WMTS({
-                url: 'http://www.ign.es/wmts/ign-base?',
+                url: 'https://www.ign.es/wmts/ign-base?',
                 name: 'IGNBaseTodo',
                 legend: 'Mapa IGN',
                 matrixSet: 'EPSG:4326',
@@ -361,9 +378,9 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         {
             id: 'imagen',
             title: 'Imagen',
-            preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqimagen.png',
+            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqimagen.png',
             layers: [new M.layer.WMTS({
-                url: 'http://www.ign.es/wmts/pnoa-ma?',
+                url: 'https://www.ign.es/wmts/pnoa-ma?',
                 name: 'OI.OrthoimageCoverage',
                 legend: 'Imagen (PNOA)',
                 matrixSet: 'EPSG:4326',
@@ -377,9 +394,9 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         {
             id: 'hibrido',
             title: 'Híbrido',
-            preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqhibrid.png',
+            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqhibrid.png',
             layers: [new M.layer.WMTS({
-                url: 'http://www.ign.es/wmts/pnoa-ma?',
+                url: 'https://www.ign.es/wmts/pnoa-ma?',
                 name: 'OI.OrthoimageCoverage',
                 legend: 'Imagen (PNOA)',
                 matrixSet: 'EPSG:4326',
@@ -390,7 +407,7 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
                 format: 'image/jpeg',
             }),
             new M.layer.WMTS({
-                url: 'http://www.ign.es/wmts/ign-base?',
+                url: 'https://www.ign.es/wmts/ign-base?',
                 name: 'IGNBaseOrto',
                 matrixSet: 'EPSG:4326',
                 legend: 'Mapa IGN',
@@ -404,7 +421,7 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         },
         {
             id: 'lidar',
-            preview: 'http://componentes.ign.es/api-core/plugins/backimglayer/images/svqlidar.png',
+            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqlidar.png',
             title: 'LIDAR',
             layers: [new M.layer.WMTS({
                 url: 'https://wmts-mapa-lidar.idee.es/lidar?',
