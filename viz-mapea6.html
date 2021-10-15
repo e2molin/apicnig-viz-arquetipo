@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="mapea" content="yes">
     <title>Arquetipo Visualizador</title>
-    <link type="text/css" rel="stylesheet" href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/assets/css/apiign.ol.min.css">
-    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/ignsearch/ignsearch.ol.min.css" rel="stylesheet" />
-    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/toc/toc.ol.min.css" rel="stylesheet" />
-    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/backimglayer/backimglayer.ol.min.css" rel="stylesheet" />
-    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/mousesrs/mousesrs.ol.min.css" rel="stylesheet" />
-    <link href="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/xylocator/xylocator.ol.min.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/assets/css/apiign.ol.min.css">
+    <link href="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/ignsearch/ignsearch.ol.min.css" rel="stylesheet" />
+    <link href="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/toc/toc.ol.min.css" rel="stylesheet" />
+    <link href="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/backimglayer/backimglayer.ol.min.css" rel="stylesheet" />
+    <link href="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/mousesrs/mousesrs.ol.min.css" rel="stylesheet" />
+    <link href="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/xylocator/xylocator.ol.min.css" rel="stylesheet" />
 
     <style type="text/css">
         html,
@@ -28,17 +28,17 @@
 
 <body>
     <div id="mapjs" class="m-container"></div>
-    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/js/apiign.ol.min.js"></script>
-    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/js/configuration.js"></script>
-    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/ignsearch/ignsearch.ol.min.js"></script>
-    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/toc/toc.ol.min.js"></script>
-    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/backimglayer/backimglayer.ol.min.js"></script>
-    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/mousesrs/mousesrs.ol.min.js"></script>
-    <script type="text/javascript" src="https://mapea-lite-6.desarrollo.guadaltel.es/api-core/plugins/xylocator/xylocator.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/js/apiign.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/js/configuration.js"></script>
+    <script type="text/javascript" src="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/ignsearch/ignsearch.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/toc/toc.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/backimglayer/backimglayer.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/mousesrs/mousesrs.ol.min.js"></script>
+    <script type="text/javascript" src="https://mapea-lite.desarrollo.guadaltel.es/api-cnig/plugins/xylocator/xylocator.ol.min.js"></script>
 
     <script type="text/javascript">
         // Configuración de backgroundlayers para EPSG:4326
-        //http://mapea-lite.desarrollo.guadaltel.es/api-core/
+        //http://mapea-lite.desarrollo.guadaltel.es/api-cnig/
         // M.config.backgroundlayers[0].layers = ['WMTS*https://www.ign.es/wmts/ign-base?*IGNBaseTodo*EPSG:4326*base*false*image/jpeg*false*false*true'];
         // M.config.backgroundlayers[1].layers = ['WMTS*https://www.ign.es/wmts/pnoa-ma?*OI.OrthoimageCoverage*EPSG:4326*imagen*false*image/jpeg*false*false*true'];
         // M.config.backgroundlayers[2].layers = [
@@ -67,7 +67,7 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
 
     const map = M.map({
         container: 'mapjs',
-        controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location', 'backgroundlayers'],
+        controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location', 'backgroundlayers','getfeatureinfo'],
         // controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location', 'backgroundlayers', 'getfeatureinfo'],
         zoom: 6,
         maxZoom: 20,
@@ -245,25 +245,53 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         format: 'image/jpeg'
     });
 
-    const wmtssiose = new M.layer.WMTS({
+    const wmtsSIOSE = new M.layer.WMTS({
         url: "https://servicios.idee.es/wmts/ocupacion-suelo",
         name: "LC.LandCoverSurfaces",
+        legend: "CORINE / SIOSE",
         matrixSet: "GoogleMapsCompatible",
-        legend: "CORINE / SIOSE"
-    }, {
-        format: 'image/jpeg'
+        displayInLayerSwitcher: true,
+        queryable: false,
+        visibility: false,
+        format: 'image/png'
     });
 
-    const wmtsmdt = new M.layer.WMTS({
-        url: "https://servicios.idee.es/wmts/mdt",
-        name: "Relieve",
-        matrixSet: "GoogleMapsCompatible",
-        legend: "MDT"
-    }, {
-        format: 'image/jpeg'
-    });
 
-    map.addLayers([REDNAP, REGENTE, REDROI, REDGNSS, REDGNSSCCAA]);
+
+    /**
+     * Tipo de Servicio
+     * URL Servicio
+     * Identificador/Nombre capa en el servicio
+     * Tilematrix
+     * Nombre capa en la leyenda del TOC (admite espacios)
+     * Transparency: false si es capa base, true si es overlay (true/false). Si es Capa base no sale en el TOC. Si es Overlay, sí que sale
+     * Formato imagen
+     * Mostrarse en el TOC Boolean
+     * Queryable (true/false) 
+     * Visibility (true/false)
+     * 
+    */
+   
+    const capaSIOSEsource = 'WMTS*https://servicios.idee.es/wmts/ocupacion-suelo?*LC.LandCoverSurfaces*GoogleMapsCompatible*SIOSE Modelo*true*image/png*true*false*false';
+
+    const wmtsMDT = new M.layer.WMTS({
+            url: "https://servicios.idee.es/wmts/mdt",
+            name: "Relieve",
+            legend: 'Mapa MDT-Relieve',
+            matrixSet: 'GoogleMapsCompatible',
+            //transparent: false,
+            displayInLayerSwitcher: true,
+            queryable: false,
+            visibility: false,
+            format: 'image/jpeg',
+          });
+
+    map.addLayers([REDNAP, REGENTE, REDROI, REDGNSS, REDGNSSCCAA, wmtsMDT]);
+
+
+    //
+
+    map.addWMTS(capaSIOSEsource);
 
     /**
      * Definismos ejempls de capas TMS y XYZ
@@ -361,7 +389,7 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         columnsNumber: 4,
         layerOpts: [{
             id: 'mapa',
-            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqmapa.png',
+            preview: 'https://componentes.ign.es/api-cnig/plugins/backimglayer/images/svqmapa.png',
             title: 'Mapa',
             layers: [new M.layer.WMTS({
                 url: 'https://www.ign.es/wmts/ign-base?',
@@ -378,7 +406,7 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         {
             id: 'imagen',
             title: 'Imagen',
-            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqimagen.png',
+            preview: 'https://componentes.ign.es/api-cnig/plugins/backimglayer/images/svqimagen.png',
             layers: [new M.layer.WMTS({
                 url: 'https://www.ign.es/wmts/pnoa-ma?',
                 name: 'OI.OrthoimageCoverage',
@@ -394,7 +422,7 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         {
             id: 'hibrido',
             title: 'Híbrido',
-            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqhibrid.png',
+            preview: 'https://componentes.ign.es/api-cnig/plugins/backimglayer/images/svqhibrid.png',
             layers: [new M.layer.WMTS({
                 url: 'https://www.ign.es/wmts/pnoa-ma?',
                 name: 'OI.OrthoimageCoverage',
@@ -421,7 +449,7 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
         },
         {
             id: 'lidar',
-            preview: 'https://componentes.ign.es/api-core/plugins/backimglayer/images/svqlidar.png',
+            preview: 'https://componentes.ign.es/api-cnig/plugins/backimglayer/images/svqlidar.png',
             title: 'LIDAR',
             layers: [new M.layer.WMTS({
                 url: 'https://wmts-mapa-lidar.idee.es/lidar?',
@@ -452,12 +480,6 @@ Capa IGNBseOrto (hasta nivel 16): https://tms-ign-base.ign.es/1.0.0/IGNBaseOrto/
             preview: 'img/mtn501Edi.jpg',
             title: 'MTN50 1Edi',
             layers: [wmtsMTN501edi],
-        },
-        {
-            id: 'SIOSE',
-            preview: 'img/siose.jpg',
-            title: 'CORINE / SIOSE',
-            layers: [wmtssiose],
         },
         ],
     }
